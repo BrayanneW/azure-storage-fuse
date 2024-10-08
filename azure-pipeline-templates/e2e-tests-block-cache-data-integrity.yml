@@ -150,8 +150,8 @@ steps:
     continueOnError: false
 
   - script: |
-     if [ -d "block_cache" ]; then ls -l block_cache; rm -rf block_cache; mkdir block_cache  ; fi
-    displayName: 'Clear Temp Cache for Block Cache before mounting'
+     if [ -d "block_cache" ]; then ls -l block_cache ; fi
+    displayName: 'View contents of temp cache path'
 
 
   - template: 'mount.yml'
@@ -169,6 +169,10 @@ steps:
       echo "----------------------------------------------"
       ls -l ${{ parameters.mount_dir }}
     displayName: 'Print contents of Block-Cache'
+
+  - script: |
+     if [ -d "block_cache" ]; then ls -l block_cache ; fi
+    displayName: 'View contents of temp cache path just after mount'
 
   - script: |
       md5sum ${{ parameters.mount_dir }}/datafiles_* > $(WORK_DIR)/md5sum_block_cache_direct_io.txt
