@@ -175,11 +175,11 @@ steps:
     displayName: 'View contents of temp cache path just after mount'
 
   - script: |
-      secs=3600                         
+      secs=900                         
       endTime=$(( $(date +%s) + secs )) # Calculate end time.
 
       while [ $(date +%s) -lt $endTime ]; do  # Loop until interval has elapsed.
-        ls -l | wc -l
+        if [ -d "block_cache" ]; then ls -l block_cache | wc -l ; fi
       done
     displayName: 'Are Contents getting deleted or Not'
 
