@@ -175,6 +175,16 @@ steps:
     displayName: 'View contents of temp cache path just after mount'
 
   - script: |
+      secs=3600                         
+      endTime=$(( $(date +%s) + secs )) # Calculate end time.
+
+      while [ $(date +%s) -lt $endTime ]; do  # Loop until interval has elapsed.
+        ls -l | wc -l
+      done
+    displayName: 'Are Contents getting deleted or Not'
+
+
+  - script: |
       md5sum ${{ parameters.mount_dir }}/datafiles_* > $(WORK_DIR)/md5sum_block_cache_direct_io.txt
       md5sum ${{ parameters.mount_dir }}/mixedfiles_* >> $(WORK_DIR)/md5sum_block_cache_direct_io.txt
     displayName: 'Generate md5Sum with Block-Cache Direct-IO'
